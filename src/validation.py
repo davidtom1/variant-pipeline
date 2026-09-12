@@ -1,5 +1,4 @@
-"""Validation helpers shared across the convert, process, and aggregate stages.
-This script verifies the correctness of the input data and ensures that the data meets the required standards before further processing."""
+"""Verifies the correctness of the input data and ensures that the data meets the required standards before further processing."""
 
 import re
 
