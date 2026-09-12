@@ -28,6 +28,7 @@ def write_json_atomic(data, path):
             json.dump(data, f)
             f.flush()
             os.fsync(f.fileno())
+        os.chmod(tmp_path, 0o644)
         os.replace(tmp_path, path)
     except Exception:
         try:
