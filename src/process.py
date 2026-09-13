@@ -6,7 +6,7 @@ import logging
 import json
 import os
 import sys
-import time 
+import time
 from collections import Counter
 
 from src.io_utils import write_json_atomic, configure_logging
@@ -20,7 +20,7 @@ def get_sleep_seconds():
         value = float(raw)
     except ValueError:
         logger.warning("Invalid PROCESS_SLEEP_SECONDS value: %s. Using default of 30 seconds.", raw)
-        return 30
+        return 30.0
     if value < 0:
         logger.warning("Negative PROCESS_SLEEP_SECONDS value: %s. Using default of 30 seconds.", raw)
         return 30.0
@@ -32,7 +32,7 @@ def process_file(json_path, output_dir, sleep_seconds):
         with open(json_path, encoding="utf-8") as f:
             payload = json.load(f)
     except (OSError, json.JSONDecodeError) as e:
-        logger.error(f"Failed to decode JSON from {json_path}: {e}")
+        logger.error("Failed to decode JSON from %s: %s", json_path, e)
         return False
     
     missing = {"source_file", "rows_read", "valid_count", "skipped_count", "variants"} - payload.keys()
@@ -73,7 +73,6 @@ def process_all(input_dir=CONVERTED_DIR, output_dir=PROCESSED_DIR):
 
     sleep_seconds = get_sleep_seconds()
     logger.info("Sleeping %.1fs per file", sleep_seconds)
-
     json_paths = sorted(input_dir.glob("*.json"))
     if not json_paths:
         logger.warning("No converted files found in %s", input_dir)
