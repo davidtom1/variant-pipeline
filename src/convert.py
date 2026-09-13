@@ -40,7 +40,7 @@ def convert_file(csv_path, output_dir):
                     csv_path.name, ", ".join(sorted(missing_fields))
                 )
                 return False
-    
+
             for row in reader:
                 rows_read += 1
                 variant, reason = validate_row(row)
@@ -86,7 +86,7 @@ def convert_all(input_dir=INPUT_DIR, output_dir=CONVERTED_DIR):
             failed += 1
     return converted, failed
 
-            
+
 
 
 

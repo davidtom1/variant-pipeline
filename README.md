@@ -6,6 +6,8 @@ a single run summary.
 
 Written for the Identifai Genetics Software Engineering Intern home assessment.
 
+**Part 2 (cloud scale sketch):** see [CLOUD.md](CLOUD.md)
+
 ---
 
 ## Quick start

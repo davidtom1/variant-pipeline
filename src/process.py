@@ -1,4 +1,3 @@
-
 """Process stage: reads each converted JSON file, simulates a compute-intensive
 step with a configurable sleep, and writes a per-file metrics JSON."""
 from datetime import datetime, timezone
@@ -35,7 +34,7 @@ def process_file(json_path, output_dir, sleep_seconds):
     except (OSError, json.JSONDecodeError) as e:
         logger.error("Failed to decode JSON from %s: %s", json_path, e)
         return False
-    
+
     missing = {"source_file", "rows_read", "valid_count", "skipped_count", "variants"} - payload.keys()
     if missing:
         logger.error("%s: not a converted file, missing keys: %s",
@@ -96,9 +95,8 @@ def main():
     logger.info("Processing complete. Processed: %s, Failed: %s", processed, failed)
     if processed == 0:
         return 1
-    else: 
+    else:
         return 0
-    
+
 if __name__ == "__main__":
     sys.exit(main())
-
