@@ -8,6 +8,7 @@ import os
 import sys
 import time
 from collections import Counter
+from src.validation import chrom_sort_key
 
 from src.io_utils import write_json_atomic, configure_logging
 from src.paths import CONVERTED_DIR, PROCESSED_DIR
@@ -55,7 +56,7 @@ def process_file(json_path, output_dir, sleep_seconds):
         "rows_read": payload["rows_read"],
         "valid_count": payload["valid_count"],
         "skipped_count": payload["skipped_count"],
-        "variants_per_chromosome": dict(sorted(counts.items())),
+        "variants_per_chromosome": dict(sorted(counts.items(), key=lambda kv: chrom_sort_key(kv[0])))
     }
     output_path = output_dir / f"{json_path.stem}.json"
     write_json_atomic(metrics, output_path)

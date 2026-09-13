@@ -130,9 +130,9 @@ def test_process_file_variants_per_chromosome_counts_and_sorts(converted_dir, pr
 
     metrics = json.loads((processed_dir / "sample.json").read_text())
     assert metrics["variants_per_chromosome"] == {"chr1": 3, "chr10": 1, "chr2": 2}
-    assert list(metrics["variants_per_chromosome"].keys()) == sorted(
-        metrics["variants_per_chromosome"].keys()
-    )
+    assert list(metrics["variants_per_chromosome"].keys()) == ["chr1", "chr2", "chr10"]
+
+    
 
 
 def test_process_file_timestamps_are_iso_with_utc_offset_and_ordered(converted_dir, processed_dir):

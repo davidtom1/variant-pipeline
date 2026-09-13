@@ -12,6 +12,15 @@ CHROM_LENGTHS = {
     "chr19": 58617616,  "chr20": 64444167,  "chr21": 46709983,
     "chr22": 50818468,  "chrX": 156040895,  "chrY": 57227415,
 }
+CHROM_ORDER = {name: i for i, name in enumerate(CHROM_LENGTHS)}
+
+
+def chrom_sort_key(chrom):
+    """Sort chromosomes in genomic order: chr1..chr22, then chrX, chrY.
+    Unknown names sort last, alphabetically, so output stays deterministic
+    even if a chromosome outside the reference set ever appears.
+    """
+    return (CHROM_ORDER.get(chrom, len(CHROM_ORDER)), chrom)
 
 REQUIRED_FIELDS = ("index", "CHROM", "POS", "REF", "ALT")
 BASES_PATTERN = re.compile(r"^[ACGT]+$")
