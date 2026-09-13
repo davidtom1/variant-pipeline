@@ -1,0 +1,28 @@
+services:
+  convert:
+    build: .
+    image: variant-pipeline
+    command: python -m src.convert
+    volumes:
+      - ./data/input:/app/data/input:ro
+      - ./data/output:/app/data/output
+
+  process:
+    image: variant-pipeline
+    command: python -m src.process
+    environment:
+      PROCESS_SLEEP_SECONDS: ${PROCESS_SLEEP_SECONDS:-30}
+    volumes:
+      - ./data/output:/app/data/output
+    depends_on:
+      convert:
+        condition: service_completed_successfully
+
+  aggregate:
+    image: variant-pipeline
+    command: python -m src.aggregate
+    volumes:
+      - ./data/output:/app/data/output
+    depends_on:
+      process:
+        condition: service_completed_successfully
