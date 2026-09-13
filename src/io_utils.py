@@ -25,7 +25,7 @@ def write_json_atomic(data, path):
     )
     try:
         with os.fdopen(fd, "w") as f:
-            json.dump(data, f)
+            json.dump(data, f, indent = 2)
             f.flush()
             os.fsync(f.fileno())
         os.chmod(tmp_path, 0o644)
